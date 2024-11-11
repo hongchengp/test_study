@@ -42,7 +42,7 @@ func TestWallet(t *testing.T) {
 		wallet.Deposit(20)
 		err := wallet.WithDraw(Bitcoin(100))
 		assertBalance(t, &wallet, Bitcoin(20))
-		assertError(t, err, "cannot withdraw, insufficient funds")
+		assertError(t, err, InsufficientFundsError.Error())
 	})
 }
 
