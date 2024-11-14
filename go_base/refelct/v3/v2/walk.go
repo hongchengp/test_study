@@ -4,12 +4,12 @@ import "reflect"
 
 func walk(x interface{}, fn func(string)) {
 	val := reflect.ValueOf(x)
-	for i := range val.NumField() {
-		v := val.Field(i)
-		if v.Kind() == reflect.String {
-			fn(v.String())
-		} else if v.Kind() == reflect.Struct {
-			walk(v.Interface(), fn)
+	switch val.Kind() {
+	case reflect.String:
+		fn(val.String())
+	case reflect.Struct:
+		for i := range val.NumField() {
+			walk(val.Field(i).Interface(), fn)
 		}
 	}
 }
